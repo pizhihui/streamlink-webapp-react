@@ -139,6 +139,50 @@ const Dashboard: React.FC<IProps> = () => {
     changePortsVisible(cell, false)
   }
 
+  const handleCellSelected = ({ cell }: { cell: Cell }) => {
+    console.log('cell:selected', cell, cell.isEdge(), cell.isNode())
+    let removeBtnCfg
+    if (cell.isNode()) {
+      const cellView = graph.current?.findView(cell) ?? null
+      // curCell.current = cellView
+      setCurCell(cellView)
+      cellView?.addClass(`${cell.shape}-selected`)
+      cellView?.addClass('kafka-node-selected')
+      removeBtnCfg = { x: 0, y: 0, offset: { x: -5, y: -5 } }
+    }
+    cell.addTools({
+      name: 'button-remove', // 工具名称
+      args: removeBtnCfg // 工具对应的参数
+    })
+  }
+
+  const handleCellUnSelected = ({ cell }: { cell: Cell }) => {
+    console.log('cell.unselected.', cell)
+    // const instance = getCurrentInstance()
+    // instance.ctx.curCell = null
+    if (cell.isEdge()) {
+      cell.attr('line', { stroke: '#808080', strokeWidth: 1 })
+    } else {
+      const cellView = graph.current?.findView(cell)
+      cellView && cellView.removeClass(`${cell.shape}-selected`)
+    }
+    cell.removeTools()
+  }
+
+  const handleBlankClick = ({
+    e,
+    x,
+    y
+  }: {
+    e: EventTarget
+    x: number
+    y: number
+  }) => {
+    // curCell.current = null
+    setCurCell(null)
+    console.log('blank.click.....', e, x, y)
+  }
+
   useEffect(() => {
     pageInit()
     graph.current?.use(
@@ -149,64 +193,18 @@ const Dashboard: React.FC<IProps> = () => {
     console.log('useEffet....', graph.current)
     graph.current?.on('node:mouseenter', handleShowPort)
     graph.current?.on('node:mouseleave', handleHidePort)
-    graph.current?.on('cell:selected', ({ cell }: { cell: Cell }) => {
-      console.log('cell:selected', cell, cell.isEdge(), cell.isNode())
-      let removeBtnCfg
-      if (cell.isNode()) {
-        const cellView = graph.current?.findView(cell) ?? null
-        // curCell.current = cellView
-        setCurCell(cellView)
-        cellView?.addClass(`${cell.shape}-selected`)
-        cellView?.addClass('kafka-node-selected')
-        removeBtnCfg = { x: 0, y: 0, offset: { x: -5, y: -5 } }
-      }
-      cell.addTools({
-        name: 'button-remove', // 工具名称
-        args: removeBtnCfg // 工具对应的参数
-      })
-    })
-    graph.current?.on('cell:unselected', ({ cell }: { cell: Cell }) => {
-      console.log('cell.unselected.', cell)
-      // const instance = getCurrentInstance()
-      // instance.ctx.curCell = null
-      if (cell.isEdge()) {
-        cell.attr('line', { stroke: '#808080', strokeWidth: 1 })
-      } else {
-        const cellView = graph.current?.findView(cell)
-        cellView && cellView.removeClass(`${cell.shape}-selected`)
-      }
-      cell.removeTools()
-    })
-    graph.current?.on('blank:click', ({ e, x, y }) => {
-      // curCell.current = null
-      setCurCell(null)
-      console.log('blank.click.....', e, x, y)
-    })
+    graph.current?.on('cell:selected', handleCellSelected)
+    graph.current?.on('cell:unselected', handleCellUnSelected)
+    graph.current?.on('blank:click', handleBlankClick)
 
     return () => {
       graph.current?.off('node:mouseenter', handleShowPort)
       graph.current?.off('node:mouseleave', handleHidePort)
+      graph.current?.off('cell:selected', handleCellSelected)
+      graph.current?.off('cell:unselected', handleCellUnSelected)
+      graph.current?.off('blank:click', handleBlankClick)
     }
   }, [])
-
-  // useEffect(() => {
-  //   const graph = new Graph({
-  //     container: document.getElementById('container') as HTMLDivElement,
-  //     width: 800,
-  //     height: 600,
-  //     background: {
-  //       color: '#F2F7FA'
-  //     }
-  //   })
-  //   graph.fromJSON(data)
-  //   graph.centerContent()
-  //   graph.use(
-  //     new Snapline({
-  //       enabled: true
-  //     })
-  //   )
-  //   return () => graph && graph.clearCells()
-  // }, [])
 
   return (
     <TaskWrapper className="task">
