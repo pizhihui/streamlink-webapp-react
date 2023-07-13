@@ -19,73 +19,6 @@ interface IProps {
   children?: ReactNode
 }
 
-const data = {
-  nodes: [
-    {
-      id: 'node1',
-      shape: 'custom-react-node',
-      x: 40,
-      y: 40,
-      label: 'hello'
-    },
-    {
-      id: 'node2',
-      shape: 'custom-react-node',
-      x: 160,
-      y: 180,
-      label: 'world'
-    }
-  ],
-  edges: [
-    {
-      shape: 'edge',
-      source: 'node1',
-      target: 'node2',
-      // label: 'x6',
-      attrs: {
-        line: {
-          stroke: '#8f8f8f',
-          strokeWidth: 1
-        }
-      }
-    }
-  ]
-}
-
-// const CustomComponent = ({ node }: { node: Node }) => {
-//   const label = node.prop('label')
-//   return (
-//     <Dropdown
-//       menu={{
-//         items: [
-//           {
-//             key: 'copy',
-//             label: '复制'
-//           },
-//           {
-//             key: 'paste',
-//             label: '粘贴'
-//           },
-//           {
-//             key: 'delete',
-//             label: '删除'
-//           }
-//         ]
-//       }}
-//       trigger={['contextMenu']}
-//     >
-//       <div className="custom-react-node">{label}</div>
-//     </Dropdown>
-//   )
-// }
-
-// register({
-//   shape: 'custom-react-node',
-//   width: 100,
-//   height: 40,
-//   component: CustomComponent
-// })
-
 Graph.registerNode('custom-react-node', ClickHouseNode, true)
 Graph.registerNode('clickhouse-node', ClickHouseNode, true)
 Graph.registerNode('kafka-node', KafkaNode, true)
@@ -96,11 +29,6 @@ const Dashboard: React.FC<IProps> = () => {
 
   const graph = useRef<Graph | null>(null)
   const dnd = useRef<Dnd | null>(null)
-  // const curCell = useRef<CellView<
-  //   Cell<Cell.Properties>,
-  //   CellView.Options
-  // > | null>(null)
-  //
   const [curCell, setCurCell] = useState<CellView<
     Cell<Cell.Properties>,
     CellView.Options
@@ -111,16 +39,8 @@ const Dashboard: React.FC<IProps> = () => {
     dnd.current = new Dnd({
       target: graph.current
     })
-    graph.current.fromJSON(data)
+    // graph.current.fromJSON(data)
   }, [])
-
-  // const pageInit = () => {
-  //   graph.current = x6Init()
-  //   dnd.current = new Dnd({
-  //     target: graph.current
-  //   })
-  //   graph.current.fromJSON(data)
-  // }
 
   const changePortsVisible = (node: Cell, visible: boolean) => {
     const ports = document.querySelectorAll<HTMLElement>(
