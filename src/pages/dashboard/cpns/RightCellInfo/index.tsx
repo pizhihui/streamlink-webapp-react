@@ -39,8 +39,8 @@ const RightCellInfo: React.FC<IProps> = ({ graph, curCell }) => {
       return
     }
     const curNode = curCell.cell
-    console.log('获取当强cell的信息.....', curNode)
-    // console.log('获取当强cell的信息.....', curNode?.prop())
+    console.log('获取当前cell的信息.....', curNode)
+    // console.log('获取当前cell的信息.....', curNode?.prop())
     // curNode?.attr('label/text', 'kafka-topic-01-....')
   }
   return (
