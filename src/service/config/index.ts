@@ -12,7 +12,7 @@
 // console.log(import.meta.env.SSR) // 是否是服务器端渲染(server side render)
 
 const BASE_URL = 'http://codercba.com:9002'
-console.log('import.meta.env', import.meta.env)
+// console.log('import.meta.env', import.meta.env)
 // let BASE_URL = ''
 // if (process.env.NODE_ENV === 'development') {
 //   生产环境

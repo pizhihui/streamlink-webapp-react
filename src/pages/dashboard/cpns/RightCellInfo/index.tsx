@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const RightCellInfo: React.FC<IProps> = ({ graph, curCell }) => {
-  console.log('right.cell.info....', graph.current)
+  // console.log('right.cell.info....', graph.current)
   const [curMsg, setCurMsg] = useState<string>('')
   // graph.current?.on('node:selected', ({ cell }: { cell: Cell }) => {
   //   console.log('selected....', cell)
@@ -22,24 +22,24 @@ const RightCellInfo: React.FC<IProps> = ({ graph, curCell }) => {
   // const preCurCell = useRef(curCell)
   useEffect(() => {
     // preCurCell.current = curCell
-    console.log('cell.info.当前组件发生变化', curCell)
+    // console.log('cell.info.当前组件发生变化', curCell)
     if (!curCell) {
       setCurMsg('')
       return
     }
-    console.log('cell.info.当前组件发生变化', curCell.cell.attrs)
+    // console.log('cell.info.当前组件发生变化', curCell.cell.attrs)
     if (curCell.cell.attrs) {
       setCurMsg(curCell.cell.attrs.label.text as string)
     }
   }, [curCell])
 
   const handleClick = () => {
-    console.log('curcell', curCell)
+    // console.log('curcell', curCell)
     if (!curCell) {
       return
     }
     const curNode = curCell.cell
-    console.log('获取当前cell的信息.....', curNode)
+    // console.log('获取当前cell的信息.....', curNode)
     // console.log('获取当前cell的信息.....', curNode?.prop())
     // curNode?.attr('label/text', 'kafka-topic-01-....')
   }

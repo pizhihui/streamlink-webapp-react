@@ -11,14 +11,14 @@ interface IProps {
 }
 
 const LeftSideBar: React.FC<IProps> = ({ graph, dnd }) => {
-  console.log('left.side.bar...', graph.current)
+  // console.log('left.side.bar...', graph.current)
   const dragMouseDown = (e: React.MouseEvent) => {
     // (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     //  (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     // console.log(graph, dnd, e)
     const target = e.currentTarget
     const type = target.getAttribute('data-type') as string
-    console.log('mouse.down.....', graph.current)
+    // console.log('mouse.down.....', graph.current)
     const kNode = graph.current?.createNode({
       shape: type,
       width: 180,
