@@ -60,7 +60,7 @@ const Dashboard: React.FC<IProps> = () => {
   }
 
   const handleCellSelected = ({ cell }: { cell: Cell }) => {
-    console.log('cell:selected', cell, cell.isEdge(), cell.isNode())
+    // console.log('cell:selected', cell, cell.isEdge(), cell.isNode())
     let removeBtnCfg
     if (cell.isNode()) {
       const cellView = graph.current?.findView(cell) ?? null
@@ -77,7 +77,7 @@ const Dashboard: React.FC<IProps> = () => {
   }
 
   const handleCellUnSelected = ({ cell }: { cell: Cell }) => {
-    console.log('cell.unselected.', cell)
+    // console.log('cell.unselected.', cell)
     // const instance = getCurrentInstance()
     // instance.ctx.curCell = null
     if (cell.isEdge()) {
@@ -100,7 +100,7 @@ const Dashboard: React.FC<IProps> = () => {
   }) => {
     // curCell.current = null
     setCurCell(null)
-    console.log('blank.click.....', e, x, y)
+    // console.log('blank.click.....', e, x, y)
   }
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const Dashboard: React.FC<IProps> = () => {
         enabled: true
       })
     )
-    console.log('useEffet....', graph.current)
+    // console.log('useEffet....', graph.current)
     graph.current?.on('node:mouseenter', handleShowPort)
     graph.current?.on('node:mouseleave', handleHidePort)
     graph.current?.on('cell:selected', handleCellSelected)
